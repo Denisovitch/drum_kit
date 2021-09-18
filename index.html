@@ -1,0 +1,145 @@
+a<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>drum-kit</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <div class="keys">
+      <!--заводим контейнер для кнопки А и подпись звука-->
+      <div id="65" class="key">
+        <kbd>A</kbd>
+        <span class="sound">clap</span>
+      </div>
+
+      <!--заводим контейнер для кнопки S и подпись звука-->
+      <div id="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">hihat</span>
+      </div>
+
+      <!--заводим контейнер для кнопки D и подпись звука-->
+      <div id="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">kick</span>
+      </div>
+
+      <!--заводим контейнер для кнопки F и подпись звука-->
+      <div id="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">openhat</span>
+      </div>
+
+      <!--заводим контейнер для кнопки G и подпись звука-->
+      <div id="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">boom</span>
+      </div>
+
+      <!--заводим контейнер для кнопки H и подпись звука-->
+      <div id="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">ride</span>
+      </div>
+
+      <!--заводим контейнер для кнопки J и подпись звука-->
+      <div id="74" class="key">
+        <kbd>J</kbd>
+        <span class="sound">snare</span>
+      </div>
+
+      <!--заводим контейнер для кнопки K и подпись звука-->
+      <div id="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">tom</span>
+      </div>
+
+      <!--заводим контейнер для кнопки L и подпись звука-->
+      <div id="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">tink</span>
+      </div>
+    </div>
+
+    <!--блок музыкальных файлов для кнопок. -->
+    <!--добавил auto для принудительной загрузки файла на страничку во всех браузерах.до этого,иногда, мелодии при нажатии были с запозданием.-->
+    <audio id="65" src="./sounds/clap.wav" auto></audio>
+    <audio id="83" src="./sounds/hihat.wav" auto></audio>
+    <audio id="68" src="./sounds/kick.wav" auto></audio>
+    <audio id="70" src="./sounds/openhat.wav" auto></audio>
+    <audio id="71" src="./sounds/boom.wav" auto></audio>
+    <audio id="72" src="./sounds/ride.wav" auto></audio>
+    <audio id="74" src="./sounds/snare.wav" auto></audio>
+    <audio id="75" src="./sounds/tom.wav" auto></audio>
+    <audio id="76" src="./sounds/tink.wav" auto></audio>
+
+    <script>
+
+      //start блок удаления "спецэффектов кнопок"
+      function removeTransition(e) {
+        if (e.propertyName !== "transform") return;
+        e.target.classList.remove("playing");
+        e.target.classList.remove("playing2");
+      }
+
+      function playSound(e) {
+        //
+      }
+
+      const keys = Array.from(document.querySelectorAll(".key"));
+      keys.forEach((key) =>
+        key.addEventListener("transitionend", removeTransition)
+      );
+      //end блок удаления "спецэффектов кнопок
+
+      // start mouse click блок
+      var button = document.querySelectorAll(".key");
+      var audio = document.querySelectorAll("audio");
+
+      function clear() {
+        for (var i = 0; i < button.length; i++) {
+          if (button[i].classList.contains("playing")) {
+            button[i].classList.contains("playing");
+            button[i].classList.contains("playing3");
+          }
+        }
+      }
+      for (var i = 0; i < button.length; i++) {
+        button[i].addEventListener("click", function () {
+          clear();
+          var presbut = this.id;
+          this.classList.add("playing3");
+          this.classList.add("playing");
+          for (var j = 0; j < button.length; j++) {
+            if (audio[j].id == presbut) {
+              audio[j].currentTime = 0;
+              audio[j].play();
+            }
+          }
+        });
+      }
+      window.addEventListener("keydown", function (ee) {
+        var pkey = ee.keyCode;
+        for (var i = 0; i < button.length; i++) {
+          if (button[i].id == pkey) {
+            clear();
+            button[i].classList.add("playing2");
+          }
+        }
+        for (var j = 0; j < button.length; j++) {
+          if (audio[j].id == pkey) {
+            audio[j].currentTime = 0;
+            audio[j].play();
+          }
+        }
+      });
+
+      // end mouse click блок
+
+          </script>
+  </body>
+</html>
